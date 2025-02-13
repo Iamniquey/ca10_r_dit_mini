@@ -1,38 +1,87 @@
-.App {
-  text-align: center;
+* {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 18px;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.header img {
+  height: 50px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.header .logo,
+.header .search,
+.header .avatar {
+  display: inline-block;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.header {
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  margin: 20px;
 }
 
-.App-link {
-  color: #61dafb;
+.logo {
+  font-weight: bold;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.logo img {
+  margin-right: 10px;
+}
+
+.logo-words {
+  position: relative;
+  top: -20px;
+  display: inline;
+  margin: auto;
+}
+
+.search {
+  padding: 7px;
+  border-radius: 20px;
+  border: 1px solid rgb(170, 170, 170);
+}
+
+.search input {
+  padding: 0;
+  margin: 0;
+  width: 400px;
+  border: none;
+}
+
+.search input:focus {
+  outline: none;
+}
+
+.search img {
+  height: 15px;
+  padding-right: 5px;
+}
+
+.footer {
+  text-align: center;
+  margin: 0 auto;
+  height: 100px;
+  background-color: rgb(250, 236, 218);
+  padding-top: 50px;
+}
+
+.post {
+  
+  border-radius: 10px;
+  padding: 30px;
+  margin: 30px;
+  background-color: rgb(226, 226, 226);
+}
+
+.post .name {
+  padding-bottom: 10px;
+  color: rgb(72, 105, 150);
+  font-size: 0.8em;
+}
+
+.post .title {
+  border-bottom: 3px solid rgb(170, 170, 170);
+  padding-bottom: 5px;
+  margin-bottom: 10px;
+  font-weight: bold;
 }
