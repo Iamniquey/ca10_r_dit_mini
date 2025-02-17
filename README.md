@@ -29,7 +29,7 @@ The page will reload when you make changes. You may also see any lint errors in 
 
 The following wireframe was created in Figma.
 
-![r'dit app wireframe](./src/images/R'dit Mini Wireframe.png "Wireframe image")
+[R'dit app wireframe on Figma](https://www.figma.com/proto/q3qgQUuMN1WKehqOD4fz9s/R'dit-Mini-Wireframe?node-id=2-2&p=f&t=FOeHOheM09Ij6K1U-1&scaling=min-zoom&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=2%3A2)
 
 ## Technologies Used
 
