@@ -64,24 +64,97 @@
   background-color: rgb(250, 236, 218);
   padding-top: 50px;
 }
-
+.posts-container {
+  width: 100%;
+}
 .post {
-  
+  width: 60%;
   border-radius: 10px;
   padding: 30px;
-  margin: 30px;
+  margin: 30px auto;
   background-color: rgb(226, 226, 226);
+  overflow-x: hidden;
 }
 
 .post .name {
+  position: relative;
   padding-bottom: 10px;
   color: rgb(72, 105, 150);
   font-size: 0.8em;
 }
+
+.post .arrow-right {
+  display: inline;
+  position: relative;
+  top: 4px;
+  transform: rotate(-90deg);
+}
+
+.post .arrow-right:hover {
+  content: url(images/arrow-red.png);
+  transform: rotate(0deg);
+}
+
 
 .post .title {
   border-bottom: 3px solid rgb(170, 170, 170);
   padding-bottom: 5px;
   margin-bottom: 10px;
   font-weight: bold;
+  color: rgb(212, 96, 1);
 }
+
+.post .arrow-up,
+.post .arrow-down,
+.post .arrow-right {
+  margin: 0 5px;
+  display: inline;
+  content: url(images/arrow.png);
+  width: 20px;
+  cursor: pointer;
+}
+
+.post .lower-area {
+  margin-top: 20px;
+
+}
+.post .arrow-up {
+  transform: rotate(180deg);
+}
+
+.post .arrow-up:hover {
+  content: url(images/arrow-red.png);
+  transform: rotate(-90deg);
+}
+
+.post .arrow-down:hover {
+  content: url(images/arrow-red.png);
+  transform: rotate(90deg);
+}
+
+.post .votes-number {
+  display: inline;
+}
+
+.post .votes {
+  display: inline;
+}
+
+.post .comments {
+  display: inline;
+  float: right;
+  color: rgb(72, 105, 150);
+  font-size: 0.8em;
+  cursor: pointer;
+}
+
+.post-link{
+  text-decoration: none;
+}
+
+.post-link:hover{
+  text-decoration: underline;
+  color: rgb(221, 140, 18);
+  font-weight: bold;
+}
+

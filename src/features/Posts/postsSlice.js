@@ -12,21 +12,27 @@ const postsSlice = createSlice({
   name: "posts",
   initialState: {
     posts: {},
-  },
-  reducers: {
-    // addPost: (state, action) => {
-    //   state.posts = action.payload;
-    // },
+    isLoadingPosts: false,
+    failedToLoadPosts: false,
   },
   extraReducers: (builder) => {
-    builder.addCase(getPosts.fulfilled, (state, action) => {
-      state.posts = action.payload;
-    });
+    builder
+      .addCase(getPosts.fulfilled, (state, action) => {
+        state.isLoadingPosts = false;
+        state.failedToLoadPosts = false;
+        state.posts = action.payload;
+      })
+      .addCase(getPosts.rejected, (state) => {
+        state.isLoadingPosts = false;
+        state.failedToLoadPosts = true;
+      })
+      .addCase(getPosts.pending, (state) => {
+        state.isLoadingPosts = true;
+        state.failedToLoadPosts = false;
+      });
   },
 });
 
 export default postsSlice.reducer;
-
-//export const { addPost } = postsSlice.actions;
 
 export const selectPosts = (state) => state.posts.posts;

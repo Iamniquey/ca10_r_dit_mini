@@ -1,21 +1,42 @@
 import React from "react";
+import { Link } from "react-router-dom";
+import { addCurrentPost } from "../CurrentPost/currentPostSlice";
+import { useDispatch } from "react-redux";
+import he from "he";
 
 const Post = ({ post }) => {
+  const dispatch = useDispatch();
+  const decodeContent = he.decode(post.content);
+  const decodeTitle = he.decode(post.title);
+
+  const handleClick = () => {
+    dispatch(addCurrentPost(post));
+  };
+
   return (
     <div className="post">
       <div className="name">u/{post.name}</div>
-      <div className="title">{post.title}</div>
-      <div className="content">
-        {post.content ? `${post.content.slice(0, 300)}...` : ""}
-      </div>
-      <div className="lower-area">
-        <div className="upvotes">
-          <div className="arrow-up"></div>
-          <div className="votes-number"></div>
-          <div className="arrow-up"></div>
-          {post.upvotes}
+
+      <Link onClick={handleClick} className="post-link" to={`/post/${post.title}`}>
+        <div className="title">
+          {decodeTitle} <div className="arrow-right"></div>
         </div>
-        <div className="comments">{post.comments}</div>
+      </Link>
+      <div
+        className="content"
+        dangerouslySetInnerHTML={{
+          __html: decodeContent.slice(0, 330) + "...",
+        }}
+      />
+      <div className="lower-area">
+        <div className="votes">
+          <div className="arrow-up"></div>
+          <div className="votes-number">{post.upvotes}</div>
+          <div className="arrow-down"></div>
+        </div>
+        <div className="comments">
+          {post.comments} {post.comments === 1 ? "Comment" : "Comments"}
+        </div>
       </div>
     </div>
   );

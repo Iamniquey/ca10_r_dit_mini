@@ -11,11 +11,13 @@ import {
 import { Provider } from "react-redux";
 import Layout from "./components/Layout";
 import { store } from "./components/store";
+import PostPage from "./features/Posts/PostPage";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<Layout />}>
       <Route index element={<App />} />
+      <Route path="post/:title" element={<PostPage />}/>
     </Route>
   )
 );

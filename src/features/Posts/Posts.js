@@ -11,7 +11,7 @@ const Posts = ({ posts }) => {
   }, [posts]);
 
   return (
-    <div>
+    <div className="posts-container">
       
       
       {allPosts.map((post, index) => {
