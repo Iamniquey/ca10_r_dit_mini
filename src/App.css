@@ -106,7 +106,8 @@
 
 .post .arrow-up,
 .post .arrow-down,
-.post .arrow-right {
+.post .arrow-right, 
+.arrow-left {
   margin: 0 5px;
   display: inline;
   content: url(images/arrow.png);
@@ -158,3 +159,42 @@
   font-weight: bold;
 }
 
+.comment-block {
+  width: 60%;
+  border-radius: 10px;
+  padding: 30px;
+  margin: 30px auto;
+  background-color: rgb(243, 226, 219);
+}
+
+.comment-name {
+  border-bottom: 2px solid rgb(94, 94, 94);
+  padding-bottom: 5px;
+  font-weight: bold;
+  color: rgb(41, 86, 148);
+}
+
+.comment-comment {
+  color: rgb(69, 81, 99);
+
+}
+
+.indent-comment{
+  margin-left: 20px;
+}
+
+.arrow-left  {
+margin-bottom: 30px;
+}
+
+.arrow-left {
+  display: inline;
+  position: relative;
+  top: 4px;
+  transform: rotate(90deg);
+}
+
+.arrow-left:hover {
+  content: url(images/arrow-red.png);
+  transform: rotate(180deg);
+}

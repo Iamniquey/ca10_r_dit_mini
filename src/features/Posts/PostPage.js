@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Navigate, useParams } from "react-router-dom";
+import { Link, Navigate, useParams } from "react-router-dom";
 import {
   getPostPage,
   selectPost,
@@ -38,6 +38,9 @@ const PostPage = () => {
   return (
     <>
       <div className="post">
+        <Link to="/">
+          <div className="arrow-left"></div>
+        </Link>
         <div className="name">u/{post.name}</div>
 
         <div className="title">{post.title}</div>
@@ -58,8 +61,11 @@ const PostPage = () => {
         </div>
       </div>
       <div className="comments">
-        {commentsObject.length > 0 ? <Comments commentsObject={commentsObject} /> : ""}
-        
+        {commentsObject.length > 0 ? (
+          <Comments commentsObject={commentsObject} />
+        ) : (
+          ""
+        )}
       </div>
     </>
   );
