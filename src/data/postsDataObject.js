@@ -1,3 +1,4 @@
+//tester posts object
 export const postsDataObject = {
   kind: "Listing",
   data: {

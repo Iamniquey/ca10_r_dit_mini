@@ -1,26 +1,48 @@
 import { useDispatch, useSelector } from "react-redux";
 import "./App.css";
-//import { addPost } from "./features/Posts/postsSlice";
-import { selectPosts } from "./features/Posts/postsSlice";
+import { selectPosts, isLoadingPosts } from "./features/Posts/postsSlice";
 import { getPosts } from "./features/Posts/postsSlice";
-import { postsDataObject } from "./data/postsDataObject";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import Posts from "./features/Posts/Posts";
+import Loading from "./features/Loading/Loading";
 
-const posts = postsDataObject;
+// // for testing
+//import { postsDataObject } from "./data/postsDataObject";
+// const posts = postsDataObject;
 
 function App() {
   const dispatch = useDispatch();
-  //const posts = useSelector(selectPosts);
+  const posts = useSelector(selectPosts);
+  const isLoading = useSelector(isLoadingPosts);
+
+  const [postsObject, setPostsObject] = useState({});
+
+  useEffect(() => {
+    dispatch(getPosts());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (posts && Object.keys(posts).length > 0) {
+      setPostsObject(posts);
+    }
+  }, [posts]);
+
+  if(isLoading){
+    return <div>Loading</div>;
+  }
 
   return (
     <div>
-      
-      <Posts posts={posts} />
-      {/* <button onClick={()=>{dispatch(getPosts());
-        
-      }}>Button</button> */}
+      <Loading />
+      {!posts ? (
+        <div className="error-message">
+          Due to the API request limit, posts cannot be displayed at this time.
+          Please wait about a minute for the limit to reset, then reload the page.
+        </div>
+      ) : (
+        <Posts posts={postsObject} />
+      )}
     </div>
   );
 }

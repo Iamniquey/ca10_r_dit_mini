@@ -55,5 +55,7 @@ Upon clicking on the title of a post, the user is taken to a **post page** which
 
 Post comments are indented based on reply level.
 
+API call limits are tracked and a message is displayed to the user when the limit is reached.
+
 
 https://markdownlivepreview.com/

@@ -7,11 +7,13 @@ import { selectSearch } from "../Search/searchSlice";
 const Posts = ({ posts }) => {
   const [allPosts, setAllPosts] = useState([]);
   const search = useSelector(selectSearch);
- 
+
   useEffect(() => {
-    const getPosts = getPostsFromJson(posts);
-    const filtertedPosts = filterPosts(getPosts, search);
-    setAllPosts(filtertedPosts);
+    if (Object.keys(posts).length > 0) {
+      const getPosts = getPostsFromJson(posts);
+      const filtertedPosts = filterPosts(getPosts, search);
+      setAllPosts(filtertedPosts);
+    }
   }, [posts, search]);
 
   return (

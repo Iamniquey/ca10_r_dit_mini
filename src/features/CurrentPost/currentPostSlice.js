@@ -1,14 +1,24 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { trackApiCallAllowance } from "../../data/util";
 
 export const getPostPage = createAsyncThunk(
   "currentPost/getPostPage",
   async (url) => {
-    const urlToFetch = `${url}.json`;
-    const response = await fetch(urlToFetch);
-    console.log(response);
-    const json = await response.json();
-    console.log(json);
-    return json;
+    if (trackApiCallAllowance()) {
+      try {
+        const urlToFetch = `${url}.json`;
+        const response = await fetch(urlToFetch);
+
+        const json = await response.json();
+
+        return json;
+      } catch (e) {
+        console.log("Error in getPostPage: ", e);
+      }
+    } else {
+      console.log("Rate limit exceeded in getPostPage. Try again later.");
+      return null;
+    }
   }
 );
 

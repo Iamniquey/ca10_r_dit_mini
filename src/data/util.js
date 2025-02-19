@@ -49,10 +49,26 @@ export function getCommentsArrayFromPostPageJson(postPageJson) {
 
     repliesArray = getRepliesRecursively(replies);
 
-    commentArray.push({ name: name, comment: comment, replies: repliesArray });
+    commentArray.push({
+      name: name,
+      comment: comment,
+      replies: repliesArray,
+    });
   });
 
   return commentArray;
+}
+
+export function getDeletedCountFromJson(postPageJson) {
+  let deleted = 0;
+  const listingWithComments = postPageJson[1].data.children;
+  listingWithComments.map((elem) => {
+    const name = elem.data.author;
+    if (name === "[deleted]") {
+      deleted++;
+    }
+  });
+  return deleted;
 }
 
 function getRepliesRecursively(object) {
@@ -82,7 +98,6 @@ export function filterPosts(postsArray, search) {
     return newArr;
   }
   newArr = newArr.filter((elem) => {
-    console.log(elem.name, search);
     const matchName = elem.name.toLowerCase().includes(search.toLowerCase());
     const matchTitle = elem.title.toLowerCase().includes(search.toLowerCase());
     const matchContent = elem.content
@@ -91,4 +106,44 @@ export function filterPosts(postsArray, search) {
     return matchName || matchTitle || matchContent;
   });
   return newArr;
+}
+
+
+export let callTracker = [];
+
+export function getCalls() {
+  return callTracker;
+}
+
+export function trackApiCallAllowance() {
+  // tracking calls
+  const now = Date.now();
+
+  //localStorage.clear();
+
+  //retrieve timestamps from localstorage
+  const callTimestamps = JSON.parse(localStorage.getItem("callTimestamps"));
+  console.log("callTimestamps", callTimestamps);
+  if (!callTimestamps) {
+    callTimestamps = [];
+  }
+  callTracker = callTimestamps;
+
+  // Remove timestamps older than 1 minute
+  while (callTimestamps.length > 0 && now - callTimestamps[0] > 60000) {
+    callTimestamps.shift();
+  }
+
+  if (callTimestamps.length < 10) {
+    // Store timestamp
+    callTimestamps.push(now);
+    console.log("API call made at:", new Date(now));
+    console.log("callTimestamps", callTimestamps);
+
+    //save to localStorage
+    localStorage.setItem("callTimestamps", JSON.stringify(callTimestamps));
+    return true;
+  } else {
+    return false;
+  }
 }

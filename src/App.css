@@ -198,3 +198,21 @@ margin-bottom: 30px;
   content: url(images/arrow-red.png);
   transform: rotate(180deg);
 }
+
+.deleted{
+  margin: 0 auto;
+  width: 200px;
+  color: rgb(135, 145, 145);
+  padding: 30px;
+}
+
+.error-message{
+  margin: 20px auto;
+  text-align: center;
+  width: 800px;
+  color: rgb(100, 109, 109);
+  padding: 50px;
+  background-color: rgb(255, 202, 193);
+  border-radius: 10px;
+  border: 1px solid red;
+}

@@ -8,65 +8,83 @@ import {
 } from "../CurrentPost/currentPostSlice";
 import { getComments, selectComments } from "../Comments/commentsSlice";
 import { pageObject } from "../../data/pageObject";
-import { getCommentsArrayFromPostPageJson } from "../../data/util";
+import {
+  getCommentsArrayFromPostPageJson,
+  getDeletedCountFromJson,
+} from "../../data/util";
 import Comments from "../Comments/Comments";
 
-const postPage = pageObject;
+//const postPage = pageObject; for testing
 
 const PostPage = () => {
   const { title } = useParams();
-  const post = useSelector(selectPost);
-  //const postPage = useSelector(selectPostPage);
+  const decodedTitle = decodeURIComponent(title);
+  const post = useSelector(selectPost); //post detals from allposts - does not include comments
+  const postPage = useSelector(selectPostPage); // post data from api call - includes comments
   const comments = useSelector(selectComments);
   const [commentsObject, setCommentsObject] = useState([]);
+  const [deletedCount, setDeletedCount] = useState(0);
   const dispatch = useDispatch();
 
-  const handleCommentLoad = () => {};
+  useEffect(() => {
+    if (post) {
+      dispatch(getPostPage(post.url));
+    }
+  }, [dispatch, post]);
 
   useEffect(() => {
-    if (Object.keys(comments).length < 1) {
-      //dispatch(getPostPage(post.url));
+    //not null and has content
+    if (postPage && Object.keys(postPage).length > 0) {
       const commObj = getCommentsArrayFromPostPageJson(postPage);
+      const deleted = getDeletedCountFromJson(postPage);
+      dispatch(getComments(commObj));
       setCommentsObject(commObj);
-      console.log(commObj);
+      setDeletedCount(deleted);
     }
-  }, [comments]);
-  if (post.title !== title) {
-    return <Navigate to="/" replace />;
+  }, [postPage]);
+
+  if (post.title !== decodedTitle) {
+    return <Navigate to="/" />;
   }
 
   return (
     <>
-      <div className="post">
-        <Link to="/">
-          <div className="arrow-left"></div>
-        </Link>
-        <div className="name">u/{post.name}</div>
+      {!postPage ? (
+        <div className="error-message">
+        Due to the API request limit, posts cannot be displayed at this time.
+        Please wait about a minute for the limit to reset, then reload the page.
+      </div>
+      ) : (
+        <>
+          <div className="post">
+            <Link to="/">
+              <div className="arrow-left"></div>
+            </Link>
+            <div className="name">u/{post.name}</div>
 
-        <div className="title">{post.title}</div>
+            <div className="title">{post.title}</div>
 
-        <div
-          className="content"
-          dangerouslySetInnerHTML={{ __html: post.content }}
-        />
-        <div className="lower-area">
-          <div className="votes">
-            <div className="arrow-up"></div>
-            <div className="votes-number">{post.upvotes}</div>
-            <div className="arrow-down"></div>
+            <div
+              className="content"
+              dangerouslySetInnerHTML={{ __html: post.content }}
+            />
+            <div className="lower-area">
+              <div className="votes">
+                <div className="arrow-up"></div>
+                <div className="votes-number">{post.upvotes}</div>
+                <div className="arrow-down"></div>
+              </div>
+              <div className="comments">
+                {post.comments} {post.comments === 1 ? "Comment" : "Comments"}
+              </div>
+            </div>
           </div>
           <div className="comments">
-            {post.comments} {post.comments === 1 ? "Comment" : "Comments"}
+            {comments.length > 0 ? <Comments commentsObject={comments} /> : ""}
+            <div className="deleted">{deletedCount} deleted comments</div>
           </div>
-        </div>
-      </div>
-      <div className="comments">
-        {commentsObject.length > 0 ? (
-          <Comments commentsObject={commentsObject} />
-        ) : (
-          ""
-        )}
-      </div>
+        </>
+      )}
     </>
   );
 };
