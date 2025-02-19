@@ -75,3 +75,20 @@ function getRepliesRecursively(object) {
     return replyObject;
   });
 }
+
+export function filterPosts(postsArray, search) {
+  let newArr = postsArray;
+  if (!search) {
+    return newArr;
+  }
+  newArr = newArr.filter((elem) => {
+    console.log(elem.name, search);
+    const matchName = elem.name.toLowerCase().includes(search.toLowerCase());
+    const matchTitle = elem.title.toLowerCase().includes(search.toLowerCase());
+    const matchContent = elem.content
+      .toLowerCase()
+      .includes(search.toLowerCase());
+    return matchName || matchTitle || matchContent;
+  });
+  return newArr;
+}
