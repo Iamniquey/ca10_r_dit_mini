@@ -49,6 +49,8 @@ The app features **a home page with the main posts** from the subreddit **[r/Sma
 
 Post are displayed with embedded html rendered as on the reddit site.
 
+Posts are automatically filtered by the search term value.
+
 Upon clicking on the title of a post, the user is taken to a **post page** which shows all the post **comments** collected via the Reddit Json api.
 
 Post comments are indented based on reply level.
