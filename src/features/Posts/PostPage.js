@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, Navigate, useParams } from "react-router-dom";
 import {
   getPostPage,
+  isLoadingPostPage,
   selectPost,
   selectPostPage,
 } from "../CurrentPost/currentPostSlice";
@@ -13,6 +14,7 @@ import {
   getDeletedCountFromJson,
 } from "../../data/util";
 import Comments from "../Comments/Comments";
+import Loading from "../Loading/Loading";
 
 //const postPage = pageObject; for testing
 
@@ -22,9 +24,10 @@ const PostPage = () => {
   const post = useSelector(selectPost); //post detals from allposts - does not include comments
   const postPage = useSelector(selectPostPage); // post data from api call - includes comments
   const comments = useSelector(selectComments);
+  const isLoading = useSelector(isLoadingPostPage);
+  const dispatch = useDispatch();
   const [commentsObject, setCommentsObject] = useState([]);
   const [deletedCount, setDeletedCount] = useState(0);
-  const dispatch = useDispatch();
 
   useEffect(() => {
     if (post) {
@@ -47,6 +50,10 @@ const PostPage = () => {
     return <Navigate to="/" />;
   }
 
+  if(isLoading){
+    return <Loading />;
+  }
+
   return (
     <>
       {!postPage ? (
@@ -63,7 +70,7 @@ const PostPage = () => {
             <div className="name">u/{post.name}</div>
 
             <div className="title">{post.title}</div>
-
+            <div className="reddit-link"><a href={post.url}>Go to post on Reddit</a></div>
             <div
               className="content"
               dangerouslySetInnerHTML={{ __html: post.content }}

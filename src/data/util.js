@@ -38,20 +38,25 @@ export function getCommentsArrayFromPostPageJson(postPageJson) {
   listingWithComments.map((elem) => {
     let repliesArray = [];
 
+    const id = elem.data.id;
     const name = elem.data.author;
-    if (name === "[deleted]") {
+    if (!name || name === "[deleted]") {
       deleted++;
       return;
     }
     const comment = decodeHtml(decodeHtml(elem.data.body_html));
 
     const replies = elem.data.replies;
-
+    console.log(replies);
     repliesArray = getRepliesRecursively(replies);
+    if(!repliesArray){
+      repliesArray = [];
+    }
 
     commentArray.push({
       name: name,
       comment: comment,
+      id: id,
       replies: repliesArray,
     });
   });
@@ -79,10 +84,16 @@ function getRepliesRecursively(object) {
   //recursive call
   const repliesObject = object.data.children;
   return repliesObject.map((reply) => {
+    console.log(reply);
+    const id = reply.data.id;
     const replyName = reply.data.author;
+    if (!replyName || replyName === "[deleted]") {
+      return [];
+    }
     const replyBody = decodeHtml(decodeHtml(reply.data.body_html));
 
     const replyObject = {
+      id: id,
       name: replyName,
       comment: replyBody,
       replies: getRepliesRecursively(reply.data.replies), // Recursive call to get nested replies
@@ -108,7 +119,6 @@ export function filterPosts(postsArray, search) {
   return newArr;
 }
 
-
 export let callTracker = [];
 
 export function getCalls() {
@@ -123,7 +133,6 @@ export function trackApiCallAllowance() {
 
   //retrieve timestamps from localstorage
   const callTimestamps = JSON.parse(localStorage.getItem("callTimestamps"));
-  console.log("callTimestamps", callTimestamps);
   if (!callTimestamps) {
     callTimestamps = [];
   }
@@ -137,8 +146,6 @@ export function trackApiCallAllowance() {
   if (callTimestamps.length < 10) {
     // Store timestamp
     callTimestamps.push(now);
-    console.log("API call made at:", new Date(now));
-    console.log("callTimestamps", callTimestamps);
 
     //save to localStorage
     localStorage.setItem("callTimestamps", JSON.stringify(callTimestamps));

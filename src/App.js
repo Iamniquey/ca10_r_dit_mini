@@ -29,12 +29,12 @@ function App() {
   }, [posts]);
 
   if(isLoading){
-    return <div>Loading</div>;
+    return <Loading />;
   }
 
   return (
     <div>
-      <Loading />
+      
       {!posts ? (
         <div className="error-message">
           Due to the API request limit, posts cannot be displayed at this time.

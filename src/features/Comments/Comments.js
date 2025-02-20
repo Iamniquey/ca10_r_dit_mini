@@ -8,14 +8,14 @@ const Comments = ({ commentsObject }) => {
   }
 
   const makeRepliesRecursively = (replies) => {
-    if (replies.length < 1) {
+    if (!replies || replies.length < 1) {
       return null;
     }
 
-    return replies.map((reply, index) => {
+    return replies.map((reply) => {
       return (
-        <div className="indent-comment">
-          <Comment key={index} comment={reply} />
+        <div key={reply.id} className="indent-comment">
+          <Comment comment={reply} />
           {makeRepliesRecursively(reply.replies)}
         </div>
       );
@@ -24,10 +24,10 @@ const Comments = ({ commentsObject }) => {
 
   return (
     <div>
-      {commentsObject.map((comment, index) => {
+      {commentsObject.map((comment) => {
         return (
-          <div className="comment-block">
-            <Comment key={index} comment={comment} />
+          <div key={comment.id} className="comment-block">
+            <Comment comment={comment} />
 
             {makeRepliesRecursively(comment.replies)}
           </div>

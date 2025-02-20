@@ -27,6 +27,8 @@ const currentPostSlice = createSlice({
   initialState: {
     post: {},
     postPage: {},
+    isLoadingPostPage: false,
+    failedToLoadPostPage: false,
   },
   reducers: {
     addCurrentPost: (state, action) => {
@@ -60,3 +62,4 @@ export const { addCurrentPost } = currentPostSlice.actions;
 
 export const selectPost = (state) => state.currentPost.post;
 export const selectPostPage = (state) => state.currentPost.postPage;
+export const isLoadingPostPage = (state) => state.currentPost.isLoadingPostPage;
